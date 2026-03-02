@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Sky Love FINAL</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  cursor:pointer;
+  background: linear-gradient(to top,#a6d8ff,#eaf6ff);
+  transition:2s;
+}
+
+/* NIGHT MODE */
+body.night{
+  background: radial-gradient(circle at bottom,#1b2735,#090a0f 80%);
+}
+
+/* SUN */
+.sun{
+  position:absolute;
+  top:-120px;
+  right:-120px;
+  width:400px;
+  height:400px;
+  background: radial-gradient(circle,#fff7b1 0%, #ffd86b 40%, transparent 70%);
+  border-radius:50%;
+  filter:blur(40px);
+}
+
+/* RAYS */
+.rays{
+  position:absolute;
+  top:-150px;
+  right:-150px;
+  width:500px;
+  height:500px;
+  background: repeating-conic-gradient(
+    rgba(255,223,100,0.3) 0deg 10deg,
+    transparent 10deg 20deg
+  );
+  border-radius:50%;
+  animation: rotate 25s linear infinite;
+}
+
+@keyframes rotate{
+  from{ transform:rotate(0);}
+  to{ transform:rotate(360deg);}
+}
+
+/* RAINBOW */
+.rainbow{
+  position:absolute;
+  bottom:-120px;
+  left:50%;
+  transform:translateX(-50%);
+  width:700px;
+  height:350px;
+  border-radius:50%;
+  background: conic-gradient(
+    red, orange, yellow, green, cyan, blue, violet
+  );
+  filter: blur(80px);
+  opacity:0.35;
+}
+
+/* EXTRA DAY SPARKLE */
+.sparkle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:white;
+  border-radius:50%;
+  animation: floatSparkle 6s infinite ease-in-out;
+  opacity:0.7;
+}
+
+@keyframes floatSparkle{
+  0%{ transform:translateY(0); opacity:0;}
+  50%{ opacity:1;}
+  100%{ transform:translateY(-80px); opacity:0;}
+}
+
+/* MOON */
+.moon{
+  position:absolute;
+  top:80px;
+  right:120px;
+  width:120px;
+  height:120px;
+  background:#fff;
+  border-radius:50%;
+  box-shadow:0 0 50px 20px rgba(255,255,200,0.9);
+  opacity:0;
+  transition:2s;
+}
+
+body.night .moon{ opacity:1; }
+body.night .sun,
+body.night .rays,
+body.night .rainbow{ opacity:0; }
+
+/* STARS */
+.star{
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:white;
+  border-radius:50%;
+  animation: twinkle 2s infinite ease-in-out;
+  pointer-events:none;
+}
+
+@keyframes twinkle{
+  0%,100%{opacity:0.2;}
+  50%{opacity:1;}
+}
+
+/* CLOUDS */
+.cloud{
+  position:absolute;
+  background:white;
+  border-radius:50%;
+  opacity:0.9;
+  animation: moveCloud linear infinite;
+}
+
+.cloud:before,
+.cloud:after{
+  content:"";
+  position:absolute;
+  background:white;
+  border-radius:50%;
+}
+
+.cloud{
+  width:200px;
+  height:70px;
+}
+
+.cloud:before{
+  width:100px;height:100px;top:-50px;left:40px;
+}
+.cloud:after{
+  width:80px;height:80px;top:-30px;left:110px;
+}
+
+.cloud1{ top:15%; left:-200px; animation-duration:60s;}
+.cloud2{ top:30%; left:-300px; animation-duration:70s;}
+.cloud3{ top:50%; left:-250px; animation-duration:55s;}
+.cloud4{ top:70%; left:-350px; animation-duration:65s;}
+.cloud5{ top:40%; left:-400px; animation-duration:75s;}
+.cloud6{ top:80%; left:-300px; animation-duration:80s;}
+
+@keyframes moveCloud{
+  from{ transform:translateX(-300px);}
+  to{ transform:translateX(120vw);}
+}
+
+.container{
+  position:relative;
+  z-index:10;
+  padding:20px;
+  color:#ff4da6;
+  font-size:24px;
+  font-weight:bold;
+  max-width:90%;
+  min-height:60px;
+}
+
+/* TYPEWRITER */
+.cursor{
+  display:inline-block;
+  width:3px;
+  background:#ff4da6;
+  margin-left:5px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink{
+  0%,50%,100%{opacity:1;}
+  25%,75%{opacity:0;}
+}
+
+button{
+  margin-top:20px;
+  padding:12px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  background:#ff4da6;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.lego{
+  display:grid;
+  grid-template-columns: repeat(7,20px);
+  gap:5px;
+  justify-content:center;
+  margin-top:30px;
+}
+
+.block{
+  width:20px;
+  height:20px;
+  background:#ff4da6;
+  opacity:0;
+  transform:scale(0);
+  animation: pop 0.4s forwards;
+}
+
+@keyframes pop{
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+.pulse{
+  animation: heartbeat 1.2s infinite;
+}
+
+@keyframes heartbeat{
+  0%,100%{ transform:scale(1);}
+  50%{ transform:scale(1.2);}
+}
+
+.final-text{
+  margin-top:20px;
+  font-size:20px;
+  color:white;
+  opacity:0;
+  transition:2s;
+}
+
+.final-text.show{
+  opacity:1;
+}
+</style>
+</head>
+
+<body>
+
+<div class="rays"></div>
+<div class="sun"></div>
+<div class="rainbow"></div>
+<div class="moon"></div>
+
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+<div class="cloud cloud3"></div>
+<div class="cloud cloud4"></div>
+<div class="cloud cloud5"></div>
+<div class="cloud cloud6"></div>
+
+<div class="container" id="text"></div>
+
+<script>
+const texts = [
+"Hey kamu ❤️",
+"tap tap aja ya 😆",
+"pencet",
+"pencet lagi",
+"ayoo sayang",
+"ini aja deh",
+"hmm...",
+"Pencet lagi 😆",
+"Semangat mencetnya",
+"aku mau ngomong sesuatu",
+"tapi booongg yahahhaha",
+"bercanda ya sayang",
+"kali ini beneran",
+"ehemm",
+"ikan hiu makan tomat",,
+"I LOVEEE YOUU SAYANGKUUU 💕"
+];
+
+let index = 0;
+const textElement = document.getElementById("text");
+
+function typeWriter(text){
+  let i = 0;
+  textElement.innerHTML="";
+  const cursor = document.createElement("span");
+  cursor.className="cursor";
+
+  function typing(){
+    if(i < text.length){
+      textElement.innerHTML = text.substring(0,i+1);
+      textElement.appendChild(cursor);
+      i++;
+      setTimeout(typing,40);
+    }
+  }
+  typing();
+}
+
+document.body.addEventListener("click", function(){
+  if(index < texts.length){
+    typeWriter(texts[index]);
+    index++;
+  } else {
+    showButton();
+  }
+});
+
+function showButton(){
+  textElement.innerHTML = `
+    <button onclick="startNight(event)">PENCET AKU</button>
+    <div id="legoContainer"></div>
+    <div class="final-text" id="finalText">
+      nihh cintakuu udah ambil aja semuanya 💞
+    </div>
+  `;
+}
+
+function startNight(e){
+  e.stopPropagation();
+  e.target.innerText="pencet terus 💕";
+  document.body.classList.add("night");
+  createStars();
+  buildLegoLove();
+}
+
+function createStars(){
+  for(let i=0;i<120;i++){
+    const star = document.createElement("div");
+    star.classList.add("star");
+    star.style.top = Math.random()*100+"vh";
+    star.style.left = Math.random()*100+"vw";
+    document.body.appendChild(star);
+  }
+}
+
+function buildLegoLove(){
+  const container = document.getElementById("legoContainer");
+  container.classList.add("lego");
+
+  const heartPattern = [
+    0,1,1,0,1,1,0,
+    1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,
+    0,1,1,1,1,1,0,
+    0,0,1,1,1,0,0,
+    0,0,0,1,0,0,0
+  ];
+
+  heartPattern.forEach((val,i)=>{
+    const block = document.createElement("div");
+    block.classList.add("block");
+    if(val===0) block.style.visibility="hidden";
+    block.style.animationDelay = (i*0.05)+"s";
+    container.appendChild(block);
+  });
+
+  setTimeout(()=>{
+    container.classList.add("pulse");
+    document.getElementById("finalText").classList.add("show");
+  }, heartPattern.length*50 + 1000);
+}
+
+/* DAY SPARKLE */
+for(let i=0;i<30;i++){
+  const s=document.createElement("div");
+  s.classList.add("sparkle");
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
+  s.style.animationDelay=Math.random()*5+"s";
+  document.body.appendChild(s);
+}
+
+typeWriter(texts[0]);
+index++;
+</script>
+
+</body>
+</html>
